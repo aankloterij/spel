@@ -1,0 +1,106 @@
+/**
+ * Spel
+ *
+ * Copyright (C) 2016  Max Verbeek & Sibren Talens
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * LET OP!
+ *
+ * Marc, als je dit daadwerkelijk leest krijg je van mij een appeltaart.
+ * - Sibren
+ */
+
+body {
+	background-color: #292929;
+	color: rgba(255, 255, 255, 0.78);
+	font-family: 'Source Code Pro', 'Consolas', 'Lucida Console', Monospace;
+}
+
+/**
+ * Code formatting
+ */
+div.code {
+	padding: 20px 100px;
+	font-size: 20pt;
+	position: relative;
+}
+
+div.code p {
+	text-align: left;
+}
+
+div.code p.link:hover {
+	background-color: rgba(68, 68, 68, 0.5);
+}
+
+button.start {
+	font-size: 0;
+	background-color: transparent;
+}
+
+button.start span a {
+	font-size: 20pt;
+	text-decoration: inherit;
+	font-style: inherit;
+	color: inherit;
+}
+
+span.format {
+	color: rgba(255, 255, 255, 0.87);
+	font-family: 'Source Code Pro', 'Consolas', 'Lucida Console', Monospace;
+}
+
+span.format.linenr {
+	color: rgba(135, 135, 135, 0.87);
+	padding: 5px 20px;
+	text-align: right;
+}
+
+span.format.bar {
+	height: 100%;
+	width: 2px;
+	background-color: rgba(103, 103, 103, 0.87);
+	position: absolute;
+	left: 160px;
+	top: 0;
+}
+
+span.format.italics {
+	font-style: italic;
+}
+
+span.format.bold {
+	font-weight: bold;
+}
+
+span.format.purple {
+	color: rgba(137, 95, 180, 0.87);
+}
+
+span.format.red {
+	color: rgba(255, 85, 85, 0.87);
+}
+
+span.format.white {
+	color: rgba(255, 255, 255, 0.87);
+}
+
+span.format.orange {
+	color: rgba(179, 119, 50, 0.87);
+}
+
+span.format.gray {
+	color: rgba(147, 147, 147, 0.87);
+}
