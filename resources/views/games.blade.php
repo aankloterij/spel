@@ -38,21 +38,19 @@
 		<p>
 			<span class="format linenr"> 5 </span>
 			<span class="format red">$games</span>
-			<span class="format white"> = </span>
+			<span class="format white">&nbsp;= </span>
 			<span class="format gray">[</span>
 		</p>
 
 		@for($i=0; $i < $levelcount ; $i++)
 			<p class="link">
 				<span class="format linenr"> {{ $i + 6 }} </span>
-				<button class="start">
-					<span class="format purple">
-						<a href="{{ url('/game/' . ($i + 1)) }}">
-							&emsp;&apos;Level {{ $i + 1 }}&apos;
-						</a>
-					</span>
-					<span class="format white">,</span>
-				</button>
+				<span class="format purple">
+					<a href="{{ url('/game/' . ($i + 1)) }}">
+						&emsp;&apos;Level {{ $i + 1 }}&apos;</a></span>
+				@if($i + 1 < $levelcount)
+					<span class="format white">&#44;</span>
+				@endif
 			</p>
 		@endfor
 

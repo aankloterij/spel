@@ -30,23 +30,27 @@ $(function(){
 		console.debug(e);
 
 		switch(e.keyCode) {
-			// W
+			// W or Arrow up
 			case 87:
+			case 38:
 				movePlayer(player, 0, -1);
 				break;
 
-			// A
+			// A or Arrow left
 			case 65:
+			case 37:
 				movePlayer(player, -1, 0);
 				break;
 
-			// S
+			// S or Arrow down
 			case 83:
+			case 40:
 				movePlayer(player, 0, 1);
 				break;
 
-			// D
+			// D or Arrow right
 			case 68:
+			case 39:
 				movePlayer(player, 1, 0);
 				break;
 
