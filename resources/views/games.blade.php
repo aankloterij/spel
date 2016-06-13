@@ -5,6 +5,7 @@
 @endsection
 
 @section('body')
+	{{-- TODO Dit alles kan beter een tabel zijn met 2 columns voor de linenr en de code --}}
 	<div class="code">
 		<p>
 			<span class="format linenr"> 1 </span>
@@ -65,7 +66,5 @@
 			<span class="format linenr"> {{ $levelcount + 7 }} </span>
 			<span class="format">&nbsp;</span>
 		</p>
-
-		<span class="format bar"></span>
 	</div>
 @endsection

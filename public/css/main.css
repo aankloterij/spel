@@ -68,15 +68,6 @@ span.format.linenr {
 	text-align: right;
 }
 
-span.format.bar {
-	height: 100%;
-	width: 2px;
-	background-color: rgba(103, 103, 103, 0.87);
-	position: absolute;
-	left: 160px;
-	top: 0;
-}
-
 span.format.italics {
 	font-style: italic;
 }
