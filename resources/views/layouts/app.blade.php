@@ -9,9 +9,9 @@
 
 	<link rel="icon" href="{{ url('favicon.ico')}}">
 
-	<title>@yield('title')</title>
-
 	@yield('head')
+
+	<title>@yield('title')</title>
 </head>
 <body>
 	@yield('body')
