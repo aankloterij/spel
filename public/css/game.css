@@ -39,8 +39,9 @@ div#board div#player {
 div#board div.board.tile {
 	display: inline-block;
 	height: 32px;
+	position: relative;
 	width: 32px;
-	background-color: rgb(0, 0, 255);
+	background-color: rgb(255, 255, 255);
 }
 
 div#board div.board.tile.grass {
