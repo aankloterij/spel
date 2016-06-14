@@ -27,9 +27,9 @@ class Maze
       for y in 0 ... @height
          for x in 0 ... @width
             chars = if @maze[y * @width + x] == 1 then
-               [ "#" ]
+               [ "#" ] # Wall
             else
-               [ "/" ]
+               [ "/" ] # Grass
             end
             chars.each { |c| putc(c) }
          end
