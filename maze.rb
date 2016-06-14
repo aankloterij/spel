@@ -29,7 +29,7 @@ class Maze
             chars = if @maze[y * @width + x] == 1 then
                [ "#" ]
             else
-               [ "+" ]
+               [ "/" ]
             end
             chars.each { |c| putc(c) }
          end
