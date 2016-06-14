@@ -63,6 +63,8 @@ span.format.linenr {
 	color: rgba(135, 135, 135, 0.87);
 	padding: 5px 20px;
 	text-align: right;
+	display: inline-block;
+	width: 30px;
 }
 
 span.format.italics {

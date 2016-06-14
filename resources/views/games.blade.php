@@ -38,7 +38,7 @@
 		<p>
 			<span class="format linenr"> 5 </span>
 			<span class="format red">$games</span>
-			<span class="format white">&nbsp;= </span>
+			<span class="format white">&nbsp;=&nbsp;</span>
 			<span class="format gray">[</span>
 		</p>
 
