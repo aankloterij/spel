@@ -77,10 +77,10 @@ function movePlayer(p, dx, dy) {
 
 	// Don't exit the board
 	xnew = Math.max(xnew, 0);
-	xnew = Math.min(xnew, 1024 - 32);
+	xnew = Math.min(xnew, 1024 - 64);
 
 	ynew = Math.max(ynew, 0);
-	ynew = Math.min(ynew, 1024 - 32);
+	ynew = Math.min(ynew, 1024 - 64);
 
 	// Fix some glitches
 	if(xnew % 32 != 0)
