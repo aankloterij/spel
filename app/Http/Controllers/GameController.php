@@ -70,7 +70,7 @@ class GameController extends Controller {
 
 		}
 
-		return view('game', ['board' => $tiles]);
+		return view('game', ['board' => $tiles, 'level' => $level]);
 
 	}
 }

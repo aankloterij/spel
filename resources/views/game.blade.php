@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-	Spel - Who says learning can't be fun?
+	Level {{ $level }} - Spel
 @endsection
 
 @section('head')
