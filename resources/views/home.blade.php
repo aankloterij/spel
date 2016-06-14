@@ -25,20 +25,18 @@
 			<span class="format linenr">
 				2
 			</span>
-			<button class="start">
-				<span class="format orange bold">
-					<a href="{{ url('/game') }}">Spel</a>
-				</span>
-				<span class="format white">
-					<a href="{{ url('/game') }}">::</a>
-				</span>
-				<span class="format gray italics">
-					<a href="{{ url('/game') }}">start</a>
-				</span>
-				<span class="format white">
-					<a href="{{ url('/game') }}">();</a>
-				</span>
-			</button>
+			<span class="format orange bold">
+				<a href="{{ url('/game') }}">Spel</a>
+			</span>
+			<span class="format white">
+				<a href="{{ url('/game') }}">::</a>
+			</span>
+			<span class="format gray italics">
+				<a href="{{ url('/game') }}">start</a>
+			</span>
+			<span class="format white">
+				<a href="{{ url('/game') }}">();</a>
+			</span>
 		</p>
 		<p>
 			<span class="format linenr">3</span>
