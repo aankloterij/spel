@@ -77,10 +77,10 @@ function movePlayer(p, dx, dy) {
 
 	// Don't exit the board
 	xnew = Math.max(xnew, 0);
-	xnew = Math.min(xnew, 1024 - 32);
+	xnew = Math.min(xnew, 992 - 32);
 
 	ynew = Math.max(ynew, 0);
-	ynew = Math.min(ynew, 1024 - 32);
+	ynew = Math.min(ynew, 992 - 32);
 
 	// Fix some glitches
 	if(xnew % 32 != 0)
@@ -98,5 +98,10 @@ function movePlayer(p, dx, dy) {
 	if(hits.length > 0) {
 		$(p).css('top', yold);
 		$(p).css('left', xold);
+	}
+
+	// If the player hits an exit
+	else if ($(p).collision('.board.tile.exit').length > 0) {
+		//
 	}
 }

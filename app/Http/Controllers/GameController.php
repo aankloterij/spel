@@ -46,10 +46,19 @@ class GameController extends Controller {
 
 		$tiles = '';
 
+		$pairfile = resource_path('game/pairs/' . $level . '.yml');
+
+		// default pairs
+		$pairs = [
+			'#' => 'wall',
+			'/' => 'grass',
+			'@' => 'exit',
+		];
+
+		if (file_exists($pairfile)) $pairs = array_merge($pairs, Yaml::parse(file_get_contents($pairfile)));
+
 		// Open the map that belongs to this game
 		$file = file(resource_path('game/maps/' . $level . '.map'));
-
-		$pairs = Yaml::parse(file_get_contents(resource_path('game/pairs/' . $level .  '.yml')));
 
 		// Foreach line in file
 		foreach($file as $y => $line) {

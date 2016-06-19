@@ -76,5 +76,5 @@ class Maze
 end
 
 mz = Maze.new
-mz.generate(32, 32)
+mz.generate(31, 31)
 mz.show()
