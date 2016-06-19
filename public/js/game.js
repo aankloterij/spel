@@ -17,12 +17,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-var board, player;
+var board, player, objective, goal;
 
 $(function(){
 	board = $('div#board');
 
 	player = $('div#player');
+
+	goal = $('.objective').size();
+
+	objective = 0;
 
 	$(window).keydown(function(e) {
 
@@ -102,6 +106,22 @@ function movePlayer(p, dx, dy) {
 
 	// If the player hits an exit
 	else if ($(p).collision('.board.tile.exit').length > 0) {
-		//
+		if (objective == goal) alert('win');
+
+		else {
+			alert('Je hebt nog niet al je shit');
+
+			$(p).css('top', yold);
+			$(p).css('left', xold);
+		}
+	}
+
+	else if ($(p).collision('.board.tile.objective').length > 0) {
+		var collision = $(p).collision('.board.tile.objective')[0];
+
+		if (objective != collision.dataset.order) alert('Je moet eerst nog andere shit oppakken');
+		else objective++;
+
+		objective.removeClass('objective').addClass('grass');
 	}
 }

@@ -68,18 +68,33 @@ class GameController extends Controller {
 
 			// Foreach character in line
 			foreach($line_split as $x => $char) {
-				if(array_key_exists($char, $pairs))
-					$tiles .= "<div class=\"board tile $pairs[$char]\"></div>";
-				else
-					continue;
+
+				if (array_key_exists($char, $pairs)) {
+
+					// Voor objectives
+					if (preg_match('/a-z0-9/', $char)) { // a-z0-9 = 0123456789abcdefgh etc..
+
+						if (! is_numeric($char)) $char = ord($char) - 86; // a = 10; b = 11; etc..
+
+						$char = (int) $char;
+
+						if (! isset($pairs[$char])) continue;
+
+						$tiles .= "<div class=\"board tile objective\" data-order=\"{$char}\" data-snippet=\"{$pairs[$char]}\"></div>";
+					}
+
+					else $tiles .= "<div class=\"board tile {$pairs[$char]}\"></div>";
+				}
+
+				else {
+					// spawn een bs ding?
+				}
 			}
 
-			// $tiles .= '</div>';
 			$tiles .= "</div>\n";
 
 		}
 
 		return view('game', ['board' => $tiles, 'level' => $level]);
-
 	}
 }
