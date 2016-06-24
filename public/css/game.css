@@ -65,3 +65,50 @@
 .tile.exit {
 	background-color: rgb(243, 159, 0);
 }
+
+.tile.objective {
+	background-color: rgb(187, 122, 179);
+}
+
+.tile.highlighted:after {
+	content: "";
+	display: inline-block;
+	width: 100%;
+	height: 100%;
+	background-color: red;
+	position: absolute;
+	opacity: .3;
+	top: 0;
+	left: 0;
+}
+
+.objective:before {
+	content: attr(data-snippet);
+	font-size: 10px;
+	word-wrap: break-word;
+	color: black;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	display: inline-block;
+}
+
+.right {
+	float: left;
+	margin-left: 100px;
+	margin-top: 50px;
+}
+
+.goals {
+	font-size: 18px;
+}
+
+.helper {
+	font-size: 36px;
+	display: block;
+}
+
+.helper:before {
+	content: "Snippet in de buurt: ";
+	opacity: .4;
+}

@@ -16,4 +16,10 @@
 		<div id="player"><div class="hitbox"></div></div>
 		{!! $board !!}
 	</div>
+
+	<div class="right">
+	<span id="helper" class="helper">-</span>
+		<ul id="goals" class="goals"></ul>
+	</div>
+
 @endsection

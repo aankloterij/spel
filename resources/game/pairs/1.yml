@@ -1,11 +1,14 @@
 objectives:
   '0': '<html>'
   '1': '<head>'
-  '2': '<title>Je moeder is gay</title>'
-  '3': '</head>'
-  '4': '<body>'
-  '5': '</body>'
-  '6': '</html>'
+  '2': '<title>'
+  '3': 'titel site'
+  '4': '</title>'
+  '5': '</head>'
+  '6': '<body>'
+  '7': 'inhoud site'
+  '8': '</body>'
+  '9': '</html>'
 
 decoys:
   - '<hdml>'

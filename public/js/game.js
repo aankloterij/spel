@@ -17,14 +17,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-var board, player, objective, goal;
+var board, player, hitbox, objective, goal, list, helper;
 
 $(function(){
 	board = $('div#board');
 
 	player = $('div#player');
 
+	hitbox = $('#player .hitbox');
+
 	goal = $('.objective').size();
+
+	list = $('#goals');
+
+	helper = $('#helper');
 
 	objective = 0;
 
@@ -120,8 +126,27 @@ function movePlayer(p, dx, dy) {
 		var collision = $(p).collision('.board .tile.objective')[0];
 
 		if (objective != collision.dataset.order) alert('Je moet eerst nog andere shit oppakken');
-		else objective++;
+		else {
 
-		$(collision).removeClass('objective').addClass('grass');
+			objective++;
+
+			list.append($('<li></li>').text(collision.dataset.snippet));
+
+			$(collision).removeClass('objective').addClass('grass');
+		}
+	}
+
+	var nearby;
+
+	// Hitbox = 3x3 around player
+	if ((nearby = hitbox.collision('.board .tile.objective')).length > 0) {
+		nearby.addClass('highlighted');
+
+		helper.text(nearby.get(0).dataset.snippet);
+	}
+
+	else {
+		$('.board .tile.objective').removeClass('highlighted');
+		helper.text('-');
 	}
 }
