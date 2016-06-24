@@ -1,2 +1,16 @@
-'/': 'grass'
-'#': 'wall'
+objectives:
+  '0': '<html>'
+  '1': '<head>'
+  '2': '<title>Je moeder is gay</title>'
+  '3': '</head>'
+  '4': '<body>'
+  '5': '</body>'
+  '6': '</html>'
+
+decoys:
+  - '<hdml>'
+  - '<php>'
+  - '<script>'
+  - '<marquee>'
+  - '<javascript>'
+  - '<title content="Je moeder is gay" />'

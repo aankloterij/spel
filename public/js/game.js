@@ -97,7 +97,7 @@ function movePlayer(p, dx, dy) {
 	$(p).css('left', xnew);
 
 	// If the player collides, go back to the old position
-	var hits = $(p).collision('.board.tile.wall');
+	var hits = $(p).collision('.board .tile.wall');
 
 	if(hits.length > 0) {
 		$(p).css('top', yold);
@@ -105,7 +105,7 @@ function movePlayer(p, dx, dy) {
 	}
 
 	// If the player hits an exit
-	else if ($(p).collision('.board.tile.exit').length > 0) {
+	else if ($(p).collision('.board .tile.exit').length > 0) {
 		if (objective == goal) alert('win');
 
 		else {
@@ -116,8 +116,8 @@ function movePlayer(p, dx, dy) {
 		}
 	}
 
-	else if ($(p).collision('.board.tile.objective').length > 0) {
-		var collision = $(p).collision('.board.tile.objective')[0];
+	else if ($(p).collision('.board .tile.objective').length > 0) {
+		var collision = $(p).collision('.board .tile.objective')[0];
 
 		if (objective != collision.dataset.order) alert('Je moet eerst nog andere shit oppakken');
 		else objective++;

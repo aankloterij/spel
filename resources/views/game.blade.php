@@ -12,7 +12,7 @@
 @endsection
 
 @section('body')
-	<div id="board">
+	<div id="board" class="board">
 		<div id="player"></div>
 		{!! $board !!}
 	</div>

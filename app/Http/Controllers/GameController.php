@@ -14,6 +14,9 @@ use Symfony\Component\Yaml\Yaml;
  */
 class GameController extends Controller {
 
+	const DECOY = '*';
+
+
 	/**
 	 * Show index page listing the games
 	 *
@@ -57,44 +60,46 @@ class GameController extends Controller {
 
 		if (file_exists($pairfile)) $pairs = array_merge($pairs, Yaml::parse(file_get_contents($pairfile)));
 
+		if (! isset($pairs['objectives'])) $pairs['objectives'] = [];
+		if (! isset($pairs['decoys'])) $pairs['decoys'] = [];
+
 		// Open the map that belongs to this game
-		$file = file(resource_path('game/maps/' . $level . '.map'));
+		$map = file_get_contents(resource_path('game/maps/' . $level . '.map'));
 
-		// Foreach line in file
-		foreach($file as $y => $line) {
-			$line_split = str_split($line);
+		$map = preg_replace_callback("/./", function ($matches) use ($pairs) {
 
-			$tiles .= '<div class="board row">';
+			$char = $matches[0];
 
-			// Foreach character in line
-			foreach($line_split as $x => $char) {
-
-				if (array_key_exists($char, $pairs)) {
-
-					// Voor objectives
-					if (preg_match('/a-z0-9/', $char)) { // a-z0-9 = 0123456789abcdefgh etc..
-
-						if (! is_numeric($char)) $char = ord($char) - 86; // a = 10; b = 11; etc..
-
-						$char = (int) $char;
-
-						if (! isset($pairs[$char])) continue;
-
-						$tiles .= "<div class=\"board tile objective\" data-order=\"{$char}\" data-snippet=\"{$pairs[$char]}\"></div>";
-					}
-
-					else $tiles .= "<div class=\"board tile {$pairs[$char]}\"></div>";
-				}
-
-				else {
-					// spawn een bs ding?
-				}
+			if ($char == static::DECOY) {
+				return '<div class="tile decoy" data-snippet="' . $this->getRandomDecoy($pairs['decoys']) . '"></div>';
 			}
 
-			$tiles .= "</div>\n";
+			elseif (isset($pairs[$char])) return '<div class="tile ' . $pairs[$char] . '"></div>';
 
+			elseif (isset($pairs['objectives'][$char])) {
+				return '<div class="tile objective" data-order="'
+					. $this->getOrder($char, $pairs['objectives'])
+					. '" data-snippet="' . $pairs['objectives'][$char] . '"></div>';
+			}
+
+			return '';
+
+		}, $map);
+
+		return view('game', ['board' => $map, 'level' => $level]);
+	}
+
+	protected function getOrder($char, $objectives) {
+		$keys = array_keys($objectives);
+
+		return array_flip($keys)[$char];
+	}
+
+	protected function getRandomDecoy($decoys) {
+		if (empty($decoys)) {
+			return '';
 		}
 
-		return view('game', ['board' => $tiles, 'level' => $level]);
+		return array_rand(array_flip($decoys));
 	}
 }
