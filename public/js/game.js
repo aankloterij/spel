@@ -122,6 +122,6 @@ function movePlayer(p, dx, dy) {
 		if (objective != collision.dataset.order) alert('Je moet eerst nog andere shit oppakken');
 		else objective++;
 
-		objective.removeClass('objective').addClass('grass');
+		$(collision).removeClass('objective').addClass('grass');
 	}
 }
