@@ -13,7 +13,5 @@ objectives:
 decoys:
   - '<hdml>'
   - '<php>'
-  - '<script>'
-  - '<marquee>'
+  - '<text>'
   - '<javascript>'
-  - '<title content="Je moeder is gay" />'

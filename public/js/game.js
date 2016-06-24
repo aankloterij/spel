@@ -112,10 +112,10 @@ function movePlayer(p, dx, dy) {
 
 	// If the player hits an exit
 	else if ($(p).collision('.board .tile.exit').length > 0) {
-		if (objective == goal) alert('win');
+		if (objective == goal) alert('Je hebt het level gehaald!!1');
 
 		else {
-			alert('Je hebt nog niet al je shit');
+			alert('Je hebt nog niet alle snippets code opgepakt.');
 
 			$(p).css('top', yold);
 			$(p).css('left', xold);
@@ -125,7 +125,7 @@ function movePlayer(p, dx, dy) {
 	else if ($(p).collision('.board .tile.objective').length > 0) {
 		var collision = $(p).collision('.board .tile.objective')[0];
 
-		if (objective != collision.dataset.order) alert('Je moet eerst nog andere shit oppakken');
+		if (objective != collision.dataset.order) alert('Dat is de verkeerde volgorde!');
 		else {
 
 			objective++;
@@ -147,6 +147,6 @@ function movePlayer(p, dx, dy) {
 
 	else {
 		$('.board .tile.objective').removeClass('highlighted');
-		helper.text('-');
+		helper.text('-')
 	}
 }
