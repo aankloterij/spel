@@ -13,7 +13,7 @@
 
 @section('body')
 	<div id="board" class="board">
-		<div id="player"></div>
+		<div id="player"><div class="hitbox"></div></div>
 		{!! $board !!}
 	</div>
 @endsection
