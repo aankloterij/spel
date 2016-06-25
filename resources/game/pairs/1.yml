@@ -1,3 +1,7 @@
+'/': 'grass'
+'#': 'wall'
+'@': 'exit'
+
 objectives:
   '0': '<html>'
   '1': '<head>'
