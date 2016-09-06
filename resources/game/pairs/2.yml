@@ -1,2 +1,13 @@
 '/': 'grass'
 '#': 'wall'
+'@': 'exit'
+
+objectives:
+  '0': '<?php'
+  '1': '$x = 16;'
+  '2': 'while('
+  '3': '0 <-- $x)'
+  '4': 'echo $x;'
+
+decoys:
+  - '#endif'

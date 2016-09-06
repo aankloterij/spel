@@ -92,7 +92,7 @@ function movePlayer(p, dx, dy) {
 	ynew = Math.max(ynew, 0);
 	ynew = Math.min(ynew, 992 - 32);
 
-	// Fix some glitches
+	// Make sure the player is aligned to the board
 	if(xnew % 32 != 0)
 		xnew = Math.floor(xnew / 32) * 32;
 
@@ -108,17 +108,23 @@ function movePlayer(p, dx, dy) {
 	if(hits.length > 0) {
 		$(p).css('top', yold);
 		$(p).css('left', xold);
+//jurryt fix deze code ff
+		return;
 	}
 
 	// If the player hits an exit
 	else if ($(p).collision('.board .tile.exit').length > 0) {
-		if (objective == goal) alert('Je hebt het level gehaald!!1');
+		if (objective == goal) {
+			alert('Je hebt het level gehaald!!1');
 
-		else {
+			return;
+		} else {
 			alert('Je hebt nog niet alle snippets code opgepakt.');
 
 			$(p).css('top', yold);
 			$(p).css('left', xold);
+
+			return;
 		}
 	}
 
