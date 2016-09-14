@@ -40,7 +40,7 @@ div#board-clip {
 	position: absolute;
 	height: 32px;
 	bottom: 32px;
-	left: 0;
+	left: 64px;
 	z-index: 1000;
 	width: 32px;
 	background-color: #3F51B5;
@@ -49,6 +49,7 @@ div#board-clip {
 	line-height: 32px;
 	text-align: center;
 	word-wrap: initial;
+	transition: bottom 50ms ease, left 50ms ease;
 }
 
 .tile {
@@ -65,4 +66,8 @@ div#board-clip {
 
 .tile.dirt {
 	background-color: sandybrown;
+}
+
+.tile.powerup {
+	background-color: lightpink;
 }
