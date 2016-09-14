@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-	Level $level - Spel2
+	Level {{ $level }} - Spel2
 @endsection
 
 @section('head')
@@ -11,9 +11,11 @@
 @endsection
 
 @section('body')
-	<div id="board" class="board">
-		<div id="player"></div>
-		{!! $board !!}
+	<div id="board-clip">
+		<div id="board" style="width: {{ $width }}px" class="board">
+			<div id="player"></div>
+			{!! $board !!}
+		</div>
 	</div>
 
 @endsection

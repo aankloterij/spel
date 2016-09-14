@@ -33,7 +33,7 @@ class Game2Controller extends Controller {
 
 		$pairs = $this->getPairs($request->level);
 
-		$map = preg_replace_callback('/./', function($matches) use ($pairs) {
+		$new_map = preg_replace_callback('/./', function($matches) use ($pairs) {
 
 			$char = $matches[0];
 
@@ -44,9 +44,12 @@ class Game2Controller extends Controller {
 
 		}, $map);
 
+		$line = fgets(fopen(resource_path('game2/maps/' . $request->level . '.map'), 'r'));
+
 		return view('game2', [
 			'level' => $request->level,
-			'board' => $map
+			'board' => $new_map,
+			'width' => (strlen($line) - 1) * 32 // Don't count the newline
 		]);
 	}
 
