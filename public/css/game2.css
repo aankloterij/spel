@@ -18,6 +18,7 @@
  */
 body {
 	min-height: 100%;
+	overflow: hidden;
 }
 
 html {
@@ -25,10 +26,12 @@ html {
 }
 
 canvas#canvas {
-	height: 100%;
-	width: 100%;
 	position: absolute;
 	top: 0;
 	bottom: 0;
 	background-color: #FFF;
+}
+
+#container {
+	display: inline-block;
 }
