@@ -16,58 +16,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+body {
+	min-height: 100%;
+}
 
-#board {
+html {
+	height: 100%;
+}
+
+canvas#canvas {
+	height: 100%;
+	width: 100%;
 	position: absolute;
-	font-size: 0;
 	top: 0;
-	left: 0;
-	height: 512px;
 	bottom: 0;
-}
-
-div#board-clip {
-	box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.87);
-	position: relative;
-	width: 1024px;
-	margin-top: 50px;
-	height: 512px;
-	margin-left: 50px;
-	overflow: hidden;
-}
-
-#player {
-	position: absolute;
-	height: 32px;
-	bottom: 32px;
-	left: 64px;
-	z-index: 1000;
-	width: 32px;
-	background-color: #3F51B5;
-	color: white;
-	font-size: 6px;
-	line-height: 32px;
-	text-align: center;
-	word-wrap: initial;
-	transition: bottom 50ms ease, left 50ms ease;
-}
-
-.tile {
-	display: inline-block;
-	height: 32px;
-	position: relative;
-	width: 32px;
-	background-color: rgb(255, 255, 255);
-}
-
-.tile.air {
-	background-color: lightblue;
-}
-
-.tile.dirt {
-	background-color: sandybrown;
-}
-
-.tile.powerup {
-	background-color: lightpink;
+	background-color: #FFF;
 }

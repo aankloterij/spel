@@ -20,6 +20,8 @@ Route::get('/game/{level}', 'GameController@game');
  */
 Route::get('/game2', 'Game2Controller@index');
 Route::get('/game2/{level}', 'Game2Controller@game');
+Route::get('/game2/getmap/{level}', 'Game2Controller@getMap');
+Route::get('/game2/getpairs/{level}', 'Game2Controller@getPairs');
 
 Route::get('/meme', function() {
 	// meme

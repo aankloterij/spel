@@ -26,40 +26,37 @@ class Game2Controller extends Controller {
 			['level' => 'numeric|required']
 		);
 
-		if($validator->fails())
-			redirect('/game2');
-
-		$map = $this->getMap($request->level);
-
-		$pairs = $this->getPairs($request->level);
-
-		$new_map = preg_replace_callback('/./', function($matches) use ($pairs) {
-
-			$char = $matches[0];
-
-			if(isset($pairs[$char]))
-				return "<div class=\"tile {$pairs[$char]}\"></div>";
-
-			return '';
-
-		}, $map);
-
-		$line = fgets(fopen(resource_path('game2/maps/' . $request->level . '.map'), 'r'));
-
 		return view('game2', [
 			'level' => $request->level,
-			'board' => $new_map,
-			'width' => (strlen($line) - 1) * 32 // Don't count the newline
 		]);
 	}
 
-	public function getMap($level) {
-		$map = file_get_contents(resource_path('game2/maps/' . $level . '.map'));
+	public function getMap(Request $request) {
+		$validator = Validator::make(
+			['level' => $request->level],
+			['level' => 'numeric|required']
+		);
 
-		return $map;
+		$map = file_get_contents(resource_path('game2/maps/' . $request->level . '.map'));
+
+		return response($map)->header('Content-Type', 'text/plain');
 	}
 
-	public function getPairs($level) {
-		return Yaml::parse(file_get_contents(resource_path('game2/pairs/' . $level . '.yml')));
+	public function getPairs(Request $request) {
+		$validator = Validator::make(
+			['level' => $request->level],
+			['level' => 'numeric|required']
+		);
+
+		// Extra leesbaar speciaal voor Marc omdat hij het het zeker weten gaat lezen
+		return response(
+			json_encode(
+				Yaml::parse(
+					file_get_contents(
+						resource_path('game2/pairs/' . $request->level . '.yml')
+						)
+					)
+				)
+			)->header('Content-Type', 'text/plain');
 	}
 }
