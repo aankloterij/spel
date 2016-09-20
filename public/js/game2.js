@@ -20,10 +20,9 @@ function start(data) {
 
 	game = new Game(data, canvas);
 
-	// game.BLOCKSIZE = Math.floor(document.body.clientHeight / game.getDimensions().height);
-	game.BLOCKSIZE = 16;
-
 	console.log(game.getDimensions().height);
 
 	game.load();
+
+	setInterval(game.loop, 1000 / game.FPS);
 }

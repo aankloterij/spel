@@ -10,3 +10,11 @@ Wij hebben allemaal professionele hipster build tools etc zoals je hierboven kan
 
 ## Hoe werkt dit
 Maak een map aan in `resources/game/maps/` en noem hem `$jelevel.map`. Maak hierin een mooie map, alleen `16x16` is supported. Je characters in je maps file corresponderen met een hashmap in `resources/game/pairs/`, bv `'#': grass` maakt elements met de class grass. Dan mag je die zelf lekker gaan stylen. Als je meer dan `16x16` wilt moet je nog wat dingen in `public/css/game.css` aanpassen. Het blok wat niet aangeraakt mag worden moet altijd `wall` heten.
+
+## TODO
+### game2
+- Gameloop met beweging
+- Collision detection
+- Images
+
+Zie ook public/test.html voor een handig example
