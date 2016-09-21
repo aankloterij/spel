@@ -1,87 +1,92 @@
 'use strict'
 
-// constructor
-var Game = function (map, canvas) {
-	this.level = level;
-	this.map = map.trim().split("\n");
+class Game {
 
-	this.canvas = canvas;
-
-	if (! this.canvas.getContext)  {
-		console.error("Koop een browser bitch.");
-		return false;
+	_initVars() {
+		this.BLOCKSIZE = 64;
+		this.FPS = 60;
+		this.PAIRS = {
+			'/': 'rgba(200, 200, 255, 1)',
+			'#': 'rgba(255, 100, 100, 1)',
+			'?': 'rgba(255, 100, 255, 1)'
+		};
 	}
 
-	this.ctx = canvas.getContext('2d');
+	constructor(map, canvas) {
 
-	this.keyHandler = new KeyHandler();
-}
+		this._initVars();
 
-// Als je dit hoger zet worden de lijnen tussen blokken clearer,
-// omdat hij word uitgerekt om de verticale hoogte van de viewport te matchen
-// 64 is goed genoeg volgensmij
-Game.prototype.BLOCKSIZE = 64;
+		this.level = level;
+		this.map = map.trim().split("\n");
 
-// Hoe vaak de gameloop draait per seconde
-Game.prototype.FPS = 60;
+		this.canvas = canvas;
 
-Game.prototype.PAIRS = {
-	'/': 'rgba(200, 200, 255, 1)',
-	'#': 'rgba(255, 100, 100, 1)',
-	'?': 'rgba(255, 100, 255, 1)'
-};
+		if (! this.canvas.getContext)  {
+			console.error("Koop een browser bitch.");
+			return false;
+		}
 
-Game.prototype.load = function () {
+		this.ctx = canvas.getContext('2d');
 
-	if (! this.map) {
-		console.error("Geen map gevonden.");
-		return false;
+		this.keyHandler = new KeyHandler();
 	}
 
-	if (this.map.length == 0) {
-		return;
-	}
+	load() {
+		if (! this.map) {
+			console.error("Geen map gevonden.");
+			return false;
+		}
 
-	// moeten we in CSS maar overflow gebruiken..
-	// En dan gwn position absolute -> naar links duwen als character verder komt.
-	this.canvas.height = this.map.length * this.BLOCKSIZE;
-	this.canvas.width = (this.map[0].length - 1) * this.BLOCKSIZE;
+		if (this.map.length == 0) {
+			return;
+		}
 
-	var currentChar;
+		// moeten we in CSS maar overflow gebruiken..
+		// En dan gwn position absolute -> naar links duwen als character verder komt.
+		this.canvas.height = this.map.length * this.BLOCKSIZE;
+		this.canvas.width = (this.map[0].length - 1) * this.BLOCKSIZE;
 
-	for (var y = 0; y < this.map.length; y++) {
+		var currentChar;
 
-		var drawn = 0;
+		for (var y = 0; y < this.map.length; y++) {
 
-		for (var x = 0; x < this.map[y].length; x++) {
-			currentChar = this.map[y][x];
+			// Het aantal blokjes die al ingekleurd zijn
+			var drawn = 0;
 
-			if (this.map[y][x+1] != currentChar) {
+			for (var x = 0; x < this.map[y].length; x++) {
+				currentChar = this.map[y][x];
 
-				this.ctx.fillStyle = this.PAIRS[currentChar];
-				this.ctx.fillRect(drawn * this.BLOCKSIZE, y * this.BLOCKSIZE, (x - drawn) * this.BLOCKSIZE, this.BLOCKSIZE);
+				// Als het volgende blokje anders is dan het huidige blokje:
+				// kleur alles in van het laatst ingekleurde blokje tot aan dit blokje.
+				if (this.map[y][x+1] != currentChar) {
 
-				drawn = x;
+					this.ctx.fillStyle = this.PAIRS[currentChar];
+					this.ctx.fillRect(drawn * this.BLOCKSIZE, y * this.BLOCKSIZE, (x - drawn) * this.BLOCKSIZE, this.BLOCKSIZE);
+
+					// Verander het laatst ingekleurde blokje naar het huidige blokje
+					drawn = x;
+				}
 			}
 		}
 	}
-}
 
-Game.prototype.loop = function () {
+	loop() {
 
-}
-
-Game.prototype.getDimensions = function () {
-	var width, height;
-
-	if (this.map.length === 0) width = height = 0;
-
-	else {
-		height = this.map.length;
-		width = this.map[0].length;
 	}
 
-	return {width: width, height: height};
+	getDimensions() {
+		var width, height;
+
+		if (this.map.length === 0) width = height = 0;
+
+		else {
+			height = this.map.length;
+			width = this.map[0].length;
+		}
+
+		return {width: width, height: height};
+	}
+
 }
 
 class Player {
