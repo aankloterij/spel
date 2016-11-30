@@ -36,6 +36,8 @@ $(function(){
 
 	$(window).keydown(function(e) {
 
+		console.log(e.keyCode)
+
 		switch(e.keyCode) {
 			// W or Arrow up
 			case 87:
