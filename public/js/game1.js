@@ -42,24 +42,28 @@ $(function(){
 			case 38:
 				e.preventDefault();
 				movePlayer(player, 0, -1);
+				break;
 
 			// A or Arrow left
 			case 65:
 			case 37:
 				e.preventDefault();
 				movePlayer(player, -1, 0);
+				break;
 
 			// S or Arrow down
 			case 83:
 			case 40:
 				e.preventDefault();
 				movePlayer(player, 0, 1);
+				break;
 
 			// D or Arrow right
 			case 68:
 			case 39:
 				e.preventDefault();
 				movePlayer(player, 1, 0);
+				break;
 
 			default:
 		}
