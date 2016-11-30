@@ -31,8 +31,8 @@
 #player {
 	position: absolute;
 	height: 32px;
-	top: 0;
-	left: 32px;
+	top: calc(attr(data-y) * 32px);
+	left: calc(attr(data-x) * 32px);
 	z-index: 1000;
 	width: 32px;
 	background-color: #3F51B5;

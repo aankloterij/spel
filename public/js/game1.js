@@ -70,73 +70,22 @@ function movePlayer(p, dx, dy) {
 	var xold, yold,
 	    xnew, ynew;
 
+	if (map typeof undefined) return;
+
 	// Dit word miss heel vervelend, maar ik ga ervan uit dat (0; 0) linksboven op het bord ligt.
 	// Hier begint de player dus zo lijkt het me logischer
 	// Daarna wel gewoon normaal, dus als je naar beneden zou gaan word het negatief
 
-	yold = $(p).position().top;
-	xold = $(p).position().left;
+	xold = p.dataset.x;
+	yold = p.dataset.y;
 
-	// 32 is de groote van de plaatjes
-	xnew = xold + (dx * 32);
-	ynew = yold + (dy * 32);
+	xnew = xold + dx;
+	ynew = yold + dy;
 
-	// Don't exit the board
-	xnew = Math.max(xnew, 0);
-	xnew = Math.min(xnew, 992 - 32);
+	if (outOfBounds(xnew, ynew, map) || collision(xnew, ynew, map)) return; 
 
-	ynew = Math.max(ynew, 0);
-	ynew = Math.min(ynew, 992 - 32);
-
-	// Make sure the player is aligned to the board
-	if(xnew % 32 != 0)
-		xnew = Math.floor(xnew / 32) * 32;
-
-	if(ynew % 32 != 0)
-		ynew = Math.floor(ynew / 32) * 32;
-
-	$(p).css('top', ynew);
-	$(p).css('left', xnew);
-
-	// If the player collides, go back to the old position
-	var hits = $(p).collision('.board .tile.wall');
-
-	if(hits.length > 0) {
-		$(p).css('top', yold);
-		$(p).css('left', xold);
-//jurryt fix deze code ff
-		return;
-	}
-
-	// If the player hits an exit
-	else if ($(p).collision('.board .tile.exit').length > 0) {
-		if (objective == goal) {
-			alert('Je hebt het level gehaald!!1');
-
-			return;
-		} else {
-			alert('Je hebt nog niet alle snippets code opgepakt.');
-
-			$(p).css('top', yold);
-			$(p).css('left', xold);
-
-			return;
-		}
-	}
-
-	else if ($(p).collision('.board .tile.objective').length > 0) {
-		var collision = $(p).collision('.board .tile.objective')[0];
-
-		if (objective != collision.dataset.order) alert('Dat is de verkeerde volgorde!');
-		else {
-
-			objective++;
-
-			list.append($('<li></li>').text(collision.dataset.snippet));
-
-			$(collision).removeClass('objective').addClass('grass');
-		}
-	}
+	p.dataset.x = xnew;
+	p.dataset.y = ynew;
 
 	var nearby;
 
@@ -151,4 +100,15 @@ function movePlayer(p, dx, dy) {
 		$('.board .tile.objective').removeClass('highlighted');
 		helper.text('-')
 	}
+}
+
+function outOfBounds(x, y, map) {
+	var ymax = map.length - 1;
+	var xmax = map[0].length - 1;
+
+	return x > xmax || y > ymax || x < 0 || y < 0;
+}
+
+function collision(x, y, map) {
+	return map[y][x] == '#'; // wall
 }

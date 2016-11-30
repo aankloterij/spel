@@ -86,7 +86,7 @@ class GameController extends Controller {
 
 		}, $rawmap);
 
-		return view('game', ['board' => $map, 'level' => $level, 'rawmap' => json_encode(explode(PHP_EOL, $rawmap))]);
+		return view('game', ['board' => $map, 'level' => $level, 'jsonmap' => json_encode(explode(PHP_EOL, $rawmap))]);
 	}
 
 	protected function getOrder($char, $objectives) {
