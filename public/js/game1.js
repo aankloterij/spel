@@ -76,8 +76,8 @@ function movePlayer(p, dx, dy) {
 	// Hier begint de player dus zo lijkt het me logischer
 	// Daarna wel gewoon normaal, dus als je naar beneden zou gaan word het negatief
 
-	xold = p.dataset.x;
-	yold = p.dataset.y;
+	xold = p.get(0).dataset.x;
+	yold = p.get(0).dataset.y;
 
 	xnew = xold + dx;
 	ynew = yold + dy;
