@@ -23,7 +23,7 @@
 	</div>
 
 	<pre>
-	{!! $map !!}
+	{!! $rawmap !!}
 	</pre>
 
 @endsection
