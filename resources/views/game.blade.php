@@ -24,5 +24,7 @@
 
 	<script type="text/javascript">
 		map = "{{!! $rawmap !!}}";
+
+		map = 
 	</script>
 @endsection
