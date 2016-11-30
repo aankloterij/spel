@@ -87,8 +87,7 @@ function movePlayer(p, dx, dy) {
 	p.data('x', xnew);
 	p.data('y', ynew);
 
-	p.left(xnew * 32);
-	p.top(ynew * 32);
+	p.css({left: xnew * 32, top: ynew * 32});
 
 	var nearby;
 
