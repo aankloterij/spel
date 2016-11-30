@@ -70,7 +70,7 @@ function movePlayer(p, dx, dy) {
 	var xold, yold,
 	    xnew, ynew;
 
-	if (map typeof undefined) return;
+	if (typeof map === 'undefined') return;
 
 	// Dit word miss heel vervelend, maar ik ga ervan uit dat (0; 0) linksboven op het bord ligt.
 	// Hier begint de player dus zo lijkt het me logischer
