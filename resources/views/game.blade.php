@@ -23,7 +23,7 @@
 	</div>
 
 	<pre>
-	{!! $pairs !!}
+	{!! $map !!}
 	</pre>
 
 @endsection

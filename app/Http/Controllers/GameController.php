@@ -86,7 +86,7 @@ class GameController extends Controller {
 
 		}, $map);
 
-		return view('game', ['board' => $map, 'level' => $level, 'pairs' => json_encode($pairs)]);
+		return view('game', ['board' => $map, 'level' => $level, 'map' => json_encode($map)]);
 	}
 
 	protected function getOrder($char, $objectives) {
