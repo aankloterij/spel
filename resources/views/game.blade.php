@@ -23,8 +23,6 @@
 	</div>
 
 	<script type="text/javascript">
-		map = "{{!! $rawmap !!}}";
-
-		map = 
+		map = "{!! $rawmap !!}";
 	</script>
 @endsection
