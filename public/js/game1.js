@@ -90,6 +90,8 @@ function movePlayer(p, dx, dy) {
 	ynew = Math.max(ynew, 0);
 	ynew = Math.min(ynew, 992 - 32);
 
+	console.log([xnew, ynew, xold, yold]);
+
 	// Make sure the player is aligned to the board
 	if(xnew % 32 != 0)
 		xnew = Math.floor(xnew / 32) * 32;
