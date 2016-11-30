@@ -76,16 +76,16 @@ function movePlayer(p, dx, dy) {
 	// Hier begint de player dus zo lijkt het me logischer
 	// Daarna wel gewoon normaal, dus als je naar beneden zou gaan word het negatief
 
-	xold = p.get(0).dataset.x;
-	yold = p.get(0).dataset.y;
+	xold = p.data('x');
+	yold = p.data('y');
 
 	xnew = xold + dx;
 	ynew = yold + dy;
 
 	if (outOfBounds(xnew, ynew, map) || collision(xnew, ynew, map)) return; 
 
-	p.dataset.x = xnew;
-	p.dataset.y = ynew;
+	p.data('x', xnew);
+	p.data('y', ynew);
 
 	var nearby;
 
