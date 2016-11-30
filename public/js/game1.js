@@ -87,6 +87,9 @@ function movePlayer(p, dx, dy) {
 	p.data('x', xnew);
 	p.data('y', ynew);
 
+	p.left(x * 32);
+	p.top(y * 32);
+
 	var nearby;
 
 	// Hitbox = 3x3 around player
