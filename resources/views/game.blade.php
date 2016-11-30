@@ -22,8 +22,7 @@
 		<ul id="goals" class="goals"></ul>
 	</div>
 
-	<pre>
-	{!! $rawmap !!}
-	</pre>
-
+	<script type="text/javascript">
+		map = {{!! $rawmap !!}}
+	</script>
 @endsection
