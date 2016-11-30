@@ -22,4 +22,8 @@
 		<ul id="goals" class="goals"></ul>
 	</div>
 
+	<pre>
+	{!! $pairs !!}
+	</pre>
+
 @endsection
