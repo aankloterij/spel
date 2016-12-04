@@ -13,7 +13,7 @@
 
 @section('body')
 	<div id="board" class="board">
-		<div id="player"><div class="hitbox"></div></div>
+		<div id="player" data-x="1" data-y="0"><div class="hitbox"></div></div>
 		{!! $board !!}
 	</div>
 
@@ -22,4 +22,7 @@
 		<ul id="goals" class="goals"></ul>
 	</div>
 
+	<script type="text/javascript">
+		map = {!! $jsonmap !!};
+	</script>
 @endsection

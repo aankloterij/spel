@@ -31,7 +31,7 @@
 #player {
 	position: absolute;
 	height: 32px;
-	top: 0;
+	top: 0px;
 	left: 32px;
 	z-index: 1000;
 	width: 32px;

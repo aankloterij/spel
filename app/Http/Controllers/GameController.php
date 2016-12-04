@@ -64,7 +64,7 @@ class GameController extends Controller {
 		if (! isset($pairs['decoys'])) $pairs['decoys'] = [];
 
 		// Open the map that belongs to this game
-		$map = file_get_contents(resource_path('game/maps/' . $level . '.map'));
+		$rawmap = file_get_contents(resource_path('game/maps/' . $level . '.map'));
 
 		$map = preg_replace_callback("/./", function ($matches) use ($pairs) {
 
@@ -84,9 +84,9 @@ class GameController extends Controller {
 
 			return '';
 
-		}, $map);
+		}, $rawmap);
 
-		return view('game', ['board' => $map, 'level' => $level]);
+		return view('game', ['board' => $map, 'level' => $level, 'jsonmap' => json_encode(explode(PHP_EOL, $rawmap))]);
 	}
 
 	protected function getOrder($char, $objectives) {
