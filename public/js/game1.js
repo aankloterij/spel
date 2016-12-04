@@ -78,6 +78,52 @@ $(function(){
 	});
 });
 
+// Deze "collide*" closures zijn functies die worden geroepen dmv collideIf.
+// Hier kun je een character of regex geven, en dan zoekt die functie uit
+// of de speler collide met dat ding dat met de gegeven string of regex overeenkomt.
+// Als dit zo is wordt de closure uitgevoerd zodat nog verder gecontroleerd
+// kan worden of de speler uberhaubt kan colliden met dit ding.
+// return True als dat kan (wel collision, dus kan er niet op staan), False
+// als dat niet kan (geen collision -> kan er wel op staan.)
+var collideExit = function (x, y) {
+	if (objective === goal) {
+		alert('Je hebt het level gehaald!');
+		finished = true;
+		return false;
+	}
+
+	alert('Je hebt nog niet alle snippets code opgepakt. :c');
+
+	return true;
+};
+
+var collideObjective = function (x, y) {
+	// Kut manier om het n-de element uit het bord te halen (waar de speler naartoe gaat.)
+	var item = $('#board .tile:eq(' + (y * (map.length - 1) + x) + ')');
+
+	console.log(item);
+
+	// Als dit item nog niet opgepakt moet worden
+	if (item.data('order') > objective) {
+		alert('Je moet eerst nog andere snippets oppakken voordat deze past.');
+
+		return true;
+	}
+
+	// Als dit het item is dat opgepakt moet worden (vanaf hier kun je er doorheen lopen)
+	else if (item.data('order') === objective) {
+		// Dit item moet opgepakt worden.
+		objective++;
+		list.append($('<li></li>').text(item.data('snippet')));
+		item.removeClass('objective').addClass('grass');
+	}
+
+	// Als order < objective, dan is het item al opgepakt, en
+	// kun je er gewoon doorheen lopen.
+
+	return false;
+};
+
 function movePlayer(p, dx, dy) {
 	var xold, yold,
 	    xnew, ynew;
@@ -93,52 +139,6 @@ function movePlayer(p, dx, dy) {
 
 	xnew = xold + dx;
 	ynew = yold + dy;
-
-	// Deze "collide*" closures zijn functies die worden geroepen dmv collideIf.
-	// Hier kun je een character of regex geven, en dan zoekt die functie uit
-	// of de speler collide met dat ding dat met de gegeven string of regex overeenkomt.
-	// Als dit zo is wordt de closure uitgevoerd zodat nog verder gecontroleerd
-	// kan worden of de speler uberhaubt kan colliden met dit ding.
-	// return True als dat kan (wel collision, dus kan er niet op staan), False
-	// als dat niet kan (geen collision -> kan er wel op staan.)
-	var collideExit = function (x, y) {
-		if (objective === goal) {
-			alert('Je hebt het level gehaald!');
-			finished = true;
-			return false;
-		}
-
-		alert('Je hebt nog niet alle snippets code opgepakt. :c');
-
-		return true;
-	};
-
-	var collideObjective = function (x, y) {
-		// Kut manier om het n-de element uit het bord te halen (waar de speler naartoe gaat.)
-		var item = $('#board .tile:eq(' + (y * (map.length - 1) + x) + ')');
-
-		console.log(item);
-
-		// Als dit item nog niet opgepakt moet worden
-		if (item.data('order') > objective) {
-			alert('Je moet eerst nog andere snippets oppakken voordat deze past.');
-
-			return true;
-		}
-
-		// Als dit het item is dat opgepakt moet worden (vanaf hier kun je er doorheen lopen)
-		else if (item.data('order') === objective) {
-			// Dit item moet opgepakt worden.
-			objective++;
-			list.append($('<li></li>').text(item.data('snippet')));
-			item.removeClass('objective').addClass('grass');
-		}
-
-		// Als order < objective, dan is het item al opgepakt, en
-		// kun je er gewoon doorheen lopen.
-
-		return false;
-	};
 
 	// Ziek if-statement lol
 	if (outOfBounds(xnew, ynew, map)
