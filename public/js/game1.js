@@ -17,7 +17,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-var board, player, hitbox, objective, goal, list, helper, finished;
+var board, player, hitbox, objective, goal, list, helper, finished, moveLoop;
+var dx, dy;
+
+
+const INTERVAL = 1;
 
 $(function(){
 	board = $('div#board');
@@ -36,44 +40,58 @@ $(function(){
 
 	finished = false;
 
-	$(window).keydown(function(e) {
+	var moveLoop = setInterval(function() {
+		if (dx !== 0 || dy !== 0) movePlayer(player, dx, dy);
+	}, INTERVAL);
 
-		// stop met bewegen als het level gehaald is.
-		// Dit return statement kan er voor zorgen dat je geen W, A, S of D in kan
-		// typen nadat het level gehaald is (in bijvoorbeeld een highscore ding)
-		// maar dat heb ik niet getest lol
+	$(window).on('keydown', function (e) {
 		if (finished) return;
 
 		switch(e.keyCode) {
-			// W or Arrow up
+      // W or Arrow up
+      case 87:
+      case 38:
+          e.preventDefault();
+          dx = 0; dy = -1;
+          break;
+
+      // A or Arrow left
+      case 65:
+      case 37:
+          e.preventDefault();
+          dx = -1; dy = 0;
+          break;
+
+      // S or Arrow down
+      case 83:
+      case 40:
+          e.preventDefault();
+          dx = 0; dy = 1;
+          break;
+
+      // D or Arrow right
+      case 68:
+      case 39:
+          e.preventDefault();
+          dx = 1; dy = 0;
+          break;
+   	}
+
+	});
+
+	$(document).on('keyup', function (e) {
+		switch (e.keyCode) {
 			case 87:
 			case 38:
-				e.preventDefault();
-				movePlayer(player, 0, -1);
-				break;
-
-			// A or Arrow left
 			case 65:
 			case 37:
-				e.preventDefault();
-				movePlayer(player, -1, 0);
-				break;
-
-			// S or Arrow down
 			case 83:
 			case 40:
-				e.preventDefault();
-				movePlayer(player, 0, 1);
-				break;
-
-			// D or Arrow right
 			case 68:
 			case 39:
+				dx = 0; dy = 0;
 				e.preventDefault();
-				movePlayer(player, 1, 0);
 				break;
-
-			default:
 		}
 	});
 });
@@ -89,6 +107,9 @@ var collideExit = function (x, y) {
 	if (objective === goal) {
 		alert('Je hebt het level gehaald!');
 		finished = true;
+
+		window.clearInterval(moveLoop);
+
 		return false;
 	}
 
@@ -130,9 +151,7 @@ function movePlayer(p, dx, dy) {
 
 	if (typeof map === 'undefined') return;
 
-	// Dit word miss heel vervelend, maar ik ga ervan uit dat (0; 0) linksboven op het bord ligt.
-	// Hier begint de player dus zo lijkt het me logischer
-	// Daarna wel gewoon normaal, dus als je naar beneden zou gaan word het negatief
+	console.log(map);
 
 	xold = p.data('x');
 	yold = p.data('y');
