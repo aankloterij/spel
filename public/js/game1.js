@@ -64,6 +64,13 @@ $(function() {
 	finished = false;
 
 	$(window).on('keydown', function (e) {
+
+		// Als je het spel al uitgespeeld hebt kun je niet meer bewegen.
+		// Dit schakelt alle event handling uit voor elke keydown toets, weet
+		// niet of dat invloed heeft op e.v.t. invoering van highscore, omdat
+		// ik geen e.preventDefault() roep.
+		if (finished) return;
+
 		if (movement = getDxDy(e.which)) {
 			e.preventDefault();
 
