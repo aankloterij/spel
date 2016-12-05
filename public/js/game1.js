@@ -19,95 +19,89 @@
 
 var board, player, hitbox, objective, goal, list, helper, finished;
 
-const SPAM_INTERVAL = 100;
+var keyLoops = {
 
-$(function(){
-	board = $('div#board');
+	interval: 50,
 
-	player = $('div#player');
+	loops: [],
 
+	addIfNotAdded: function (movement) {
+		if (! this.loops[movement.direction]) {
+			this.loops[movement.direction] = setInterval(function () {
+				movePlayer(player, movement.dx, movement.dy);
+			}, this.interval);
+
+			console.log("Added keyloop: " + movement.direction);
+		}
+	},
+
+	remove: function (direction) {
+
+		if (this.loops[direction]) {
+			clearInterval(this.loops[direction]);
+			this.loops[direction] = null;
+
+			console.log("Removed keyloop: " + direction);
+		}
+	},
+
+	removeAll: function () {
+
+		for (var index in this.loops) {
+			if (this.loops[index]) this.remove(index);
+		}
+	}
+};
+
+$(function() {
+	board = $('#board');
+	player = $('#player');
 	hitbox = $('#player .hitbox');
-
 	goal = $('.objective').size();
-
 	list = $('#goals');
-
 	helper = $('#helper');
-
 	objective = 0;
-
 	finished = false;
 
-	var keyHandler = function (e, closure) {
-
-		switch(e.keyCode) {
-			// W or Arrow up
-			case 87:
-			case 38:
-				e.preventDefault();
-				closure(player, 0, -1);
-				break;
-
-			// A or Arrow left
-			case 65:
-			case 37:
-				e.preventDefault();
-				closure(player, -1, 0);
-				break;
-
-			// S or Arrow down
-			case 83:
-			case 40:
-				e.preventDefault();
-				closure(player, 0, 1);
-				break;
-
-			// D or Arrow right
-			case 68:
-			case 39:
-				e.preventDefault();
-				closure(player, 1, 0);
-				break;
-		}
-	};
-
 	$(window).on('keydown', function (e) {
-		keyHandler(e, keySpam);
+		if (movement = getDxDy(e.which)) {
+			e.preventDefault();
+
+			keyLoops.addIfNotAdded(movement);
+		}
 	});
 
-	$(window).on('keyup', function (e) {
-		keyHandler(e, stopKeySpam);
+	$(window).on('keyup blur', function (e) {
+
+		if (movement = getDxDy(e.which)) keyLoops.remove(movement.direction);
+
+		if (e.type === "blur") keyLoops.removeAll();
+
 	});
 
 });
 
-var spamLoop = {
-	0: [],
-	1: [],
-	2: []
-}
+function getDxDy(key) {
+	switch (key) {
+		case 87: // w
+		case 38: // arrow up
+			return {dx: 0, dy: -1, direction: 'N'}; // north
 
-function keySpam(player, dx, dy) {
-	// zorgt ervoor dat dx,dy input gespamt wordt naar movePlayer
-	if (spamLoop[dx+1][dy+1] === null) spamLoop[dx+1][dy+1] = setInterval(function () {
-		movePlayer(player, dx, dy);
-	}, SPAM_INTERVAL);
-}
+		case 65: // a
+		case 37: // arrow left
+			return {dx: -1, dy: 0, direction: 'W'}; // west
 
-function stopKeySpam(player, dx, dy) {
-	window.clearInterval(spamLoop[dx+1][dy+1]);
-	spamLoop[dx+1][dy+1] = null;
-}
+		case 83: // s
+		case 40: // arrow down
+			return {dx: 0, dy: 1, direction: 'S'}; // south
 
-function stopMoving() {
-	for(var i = 0; i < spamLoop.length; i++) {
-		for (var q = 0; q < spamloop[i].length; q++) {
-			clearInterval(spamLoop[i][q]);
-			spamLoop[i][q] = null;
-		}
+		case 68: // d
+		case 39: // arrow right
+			return {dx: 1, dy: 0, direction: 'E'}; // east
+
+		default:
+			return null;
 	}
-
-	return true;
 }
 
 // Deze "collide*" closures zijn functies die worden geroepen dmv collideIf.
@@ -119,33 +113,27 @@ function stopMoving() {
 // als dat niet kan (geen collision -> kan er wel op staan.)
 var collideExit = function (x, y) {
 
-	stopMoving();
-
 	if (objective === goal) {
-		alert('Je hebt het level gehaald!');
+		notify('Je hebt het level gehaald!');
 		finished = true;
 		return false;
 	}
 
-	alert('Je hebt nog niet alle snippets code opgepakt. :c');
+	notify('Je hebt nog niet alle snippets code opgepakt. :c');
 
 	return true;
 };
 
 var collideObjective = function (x, y) {
 
-	stopMoving();
-
 	// Kut manier om het n-de element uit het bord te halen (waar de speler naartoe gaat.)
 	var item = $('#board .tile:eq(' + (y * (map.length - 1) + x) + ')');
 
-	console.log(item);
-
 	// Als dit item nog niet opgepakt moet worden
 	if (item.data('order') > objective) {
-		alert('Je moet eerst nog andere snippets oppakken voordat deze past.');
+		notify('Je moet eerst nog andere snippets oppakken voordat deze past.');
 
-		location.reload();
+		// location.reload();
 
 		return true;
 	}
@@ -172,7 +160,8 @@ function movePlayer(p, dx, dy) {
 
 	// Dit word miss heel vervelend, maar ik ga ervan uit dat (0; 0) linksboven op het bord ligt.
 	// Hier begint de player dus zo lijkt het me logischer
-	// Daarna wel gewoon normaal, dus als je naar beneden zou gaan word het negatief
+	// Daarna wel gewoon normaal, dus als je naar beneden zou gaan wordt
+	// y positief (top in CSS stelt afstand van bovenkant in)
 
 	xold = p.data('x');
 	yold = p.data('y');
@@ -192,7 +181,6 @@ function movePlayer(p, dx, dy) {
 
 	p.css({left: xnew * 32, top: ynew * 32});
 
-
 	// Regel de 3x3 hitbox om de speler heen (voor het highlighten van objectives)
 	var nearby;
 
@@ -209,7 +197,7 @@ function movePlayer(p, dx, dy) {
 		// Zorg er daarom ook voor dat er altijd maar 1 objective tegelijkertijd
 		// naast de speler kan zijn.
 		$('.board .tile.objective').removeClass('highlighted');
-		helper.text('-')
+		helper.text('-');
 	}
 
 }
@@ -238,4 +226,13 @@ function collideWith(x, y, map, condition) {
 // alles hebt opgepakt.
 function collideIf(x, y, map, condition, closure) {
 	return collideWith(x, y, map, condition) && closure(x, y);
+}
+
+function notify(message) {
+
+	// Release alle toetsen, zodat speler niet constant in dat ding blijft lopen.
+	keyLoops.removeAll();
+
+	console.log("Send notification: " + message);
+	alert(message);
 }
