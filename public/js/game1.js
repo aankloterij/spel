@@ -19,6 +19,8 @@
 
 var board, player, hitbox, objective, goal, list, helper, finished;
 
+const SPAM_INTERVAL = 100;
+
 $(function(){
 	board = $('div#board');
 
@@ -36,47 +38,77 @@ $(function(){
 
 	finished = false;
 
-	$(window).keydown(function(e) {
-
-		// stop met bewegen als het level gehaald is.
-		// Dit return statement kan er voor zorgen dat je geen W, A, S of D in kan
-		// typen nadat het level gehaald is (in bijvoorbeeld een highscore ding)
-		// maar dat heb ik niet getest lol
-		if (finished) return;
+	var keyHandler = function (e, closure) {
 
 		switch(e.keyCode) {
 			// W or Arrow up
 			case 87:
 			case 38:
 				e.preventDefault();
-				movePlayer(player, 0, -1);
+				closure(player, 0, -1);
 				break;
 
 			// A or Arrow left
 			case 65:
 			case 37:
 				e.preventDefault();
-				movePlayer(player, -1, 0);
+				closure(player, -1, 0);
 				break;
 
 			// S or Arrow down
 			case 83:
 			case 40:
 				e.preventDefault();
-				movePlayer(player, 0, 1);
+				closure(player, 0, 1);
 				break;
 
 			// D or Arrow right
 			case 68:
 			case 39:
 				e.preventDefault();
-				movePlayer(player, 1, 0);
+				closure(player, 1, 0);
 				break;
-
-			default:
 		}
+	};
+
+	$(window).on('keydown', function (e) {
+		keyHandler(e, keySpam);
 	});
+
+	$(window).on('keyup', function (e) {
+		keyHandler(e, stopKeySpam);
+	});
+
 });
+
+var spamLoop = {
+	0: [],
+	1: [],
+	2: []
+}
+
+function keySpam(player, dx, dy) {
+	// zorgt ervoor dat dx,dy input gespamt wordt naar movePlayer
+	if (spamLoop[dx+1][dy+1] === null) spamLoop[dx+1][dy+1] = setInterval(function () {
+		movePlayer(player, dx, dy);
+	}, SPAM_INTERVAL);
+}
+
+function stopKeySpam(player, dx, dy) {
+	window.clearInterval(spamLoop[dx+1][dy+1]);
+	spamLoop[dx+1][dy+1] = null;
+}
+
+function stopMoving() {
+	for(var i = 0; i < spamLoop.length; i++) {
+		for (var q = 0; q < spamloop[i].length; q++) {
+			clearInterval(spamLoop[i][q]);
+			spamLoop[i][q] = null;
+		}
+	}
+
+	return true;
+}
 
 // Deze "collide*" closures zijn functies die worden geroepen dmv collideIf.
 // Hier kun je een character of regex geven, en dan zoekt die functie uit
@@ -86,6 +118,9 @@ $(function(){
 // return True als dat kan (wel collision, dus kan er niet op staan), False
 // als dat niet kan (geen collision -> kan er wel op staan.)
 var collideExit = function (x, y) {
+
+	stopMoving();
+
 	if (objective === goal) {
 		alert('Je hebt het level gehaald!');
 		finished = true;
@@ -98,6 +133,9 @@ var collideExit = function (x, y) {
 };
 
 var collideObjective = function (x, y) {
+
+	stopMoving();
+
 	// Kut manier om het n-de element uit het bord te halen (waar de speler naartoe gaat.)
 	var item = $('#board .tile:eq(' + (y * (map.length - 1) + x) + ')');
 
@@ -106,6 +144,8 @@ var collideObjective = function (x, y) {
 	// Als dit item nog niet opgepakt moet worden
 	if (item.data('order') > objective) {
 		alert('Je moet eerst nog andere snippets oppakken voordat deze past.');
+
+		location.reload();
 
 		return true;
 	}
