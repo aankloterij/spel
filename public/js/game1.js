@@ -122,6 +122,20 @@ var collideExit = function (x, y) {
 
 	if (objective === goal) {
 		notify('Je hebt het level gehaald!');
+
+		urlpath = window.location.pathname.split('/');
+
+		switch(urlpath[urlpath.length - 1]) {
+			case '1':
+				alert('In dit level heb je een HTML document opgesteld\nHTML documenten vormen de basis van alle web paginas\n Ga door naar het volgende level om PHP code te schrijven om je web paginas te laten leven!');
+
+			case '2':
+				alert('In dit level heb je je eerste stukje PHP code geschreven!\nDeze code telt af van 16 naar 0\n en print elk getal op de pagina.');
+
+			default:
+				break;
+		}
+
 		finished = true;
 		return false;
 	}
