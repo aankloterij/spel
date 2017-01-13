@@ -63,6 +63,21 @@ $(function() {
 	objective = 0;
 	finished = false;
 
+	urlpath = window.location.pathname.split('/');
+
+	switch(urlpath[urlpath.length - 1]) {
+		case '1':
+			alert('In dit level ga je de basis van een HTML document opstellen\nPak alle tags in de goede volgorde op om het level te halen!');
+			break;
+
+		case '2':
+			alert('In dit bestand ga je een PHP script maken die aftelt van 16 naar 0');
+			break;
+
+		default:
+			break;
+	}
+
 	$(window).on('keydown', function (e) {
 
 		// Als je het spel al uitgespeeld hebt kun je niet meer bewegen.
@@ -128,9 +143,11 @@ var collideExit = function (x, y) {
 		switch(urlpath[urlpath.length - 1]) {
 			case '1':
 				alert('In dit level heb je een HTML document opgesteld\nHTML documenten vormen de basis van alle web paginas\n Ga door naar het volgende level om PHP code te schrijven om je web paginas te laten leven!');
+				break;
 
 			case '2':
 				alert('In dit level heb je je eerste stukje PHP code geschreven!\nDeze code telt af van 16 naar 0\n en print elk getal op de pagina.');
+				break; // Deze stonden er altijd al maar dat staat niet in git
 
 			default:
 				break;
