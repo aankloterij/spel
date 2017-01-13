@@ -215,7 +215,7 @@ function movePlayer(p, dx, dy) {
 	xnew = xold + dx;
 	ynew = yold + dy;
 
-	var noClip = true;
+	var noClip = false;
 
 	// Ziek if-statement lol
 	if (outOfBounds(xnew, ynew, map)
