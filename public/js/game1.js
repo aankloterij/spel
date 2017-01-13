@@ -138,11 +138,19 @@ var collideExit = function (x, y) {
 	if (objective === goal) {
 		notify('Je hebt het level gehaald!');
 
-		urlpath = window.location.pathname.split('/');
+		var urlpath = window.location.pathname.split('/');
+		var levelgetal;
+		var asdf;
 
-		switch(urlpath[urlpath.length - 1]) {
+		switch(levelgetal = urlpath[urlpath.length - 1]) {
 			case '1':
 				alert('In dit level heb je een HTML document opgesteld\nHTML documenten vormen de basis van alle web paginas\n Ga door naar het volgende level om PHP code te schrijven om je web paginas te laten leven!');
+
+				asdf = window.location.href.split('/');
+				asdf[asdf.length - 1] = '2';
+
+				window.location.href = asdf.join('/');
+
 				break;
 
 			case '2':
@@ -207,9 +215,11 @@ function movePlayer(p, dx, dy) {
 	xnew = xold + dx;
 	ynew = yold + dy;
 
+	var noClip = true;
+
 	// Ziek if-statement lol
 	if (outOfBounds(xnew, ynew, map)
-		|| collideWith(xnew, ynew, map, '#')
+		|| (! noClip && collideWith(xnew, ynew, map, '#'))
 		|| collideIf(xnew, ynew, map, /\d/, collideObjective)
 		|| collideIf(xnew, ynew, map, '@', collideExit)) return;
 
