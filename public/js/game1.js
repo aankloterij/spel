@@ -19,6 +19,8 @@
 
 var board, player, hitbox, objective, goal, list, helper, finished, noClip;
 
+noClip = false;
+
 var keyLoops = {
 
 	interval: 50,
@@ -214,8 +216,6 @@ function movePlayer(p, dx, dy) {
 
 	xnew = xold + dx;
 	ynew = yold + dy;
-
-	noClip = false;
 
 	// Ziek if-statement lol
 	if (outOfBounds(xnew, ynew, map)
