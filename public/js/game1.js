@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-var board, player, hitbox, objective, goal, list, helper, finished;
+var board, player, hitbox, objective, goal, list, helper, finished, noClip;
 
 var keyLoops = {
 
@@ -215,7 +215,7 @@ function movePlayer(p, dx, dy) {
 	xnew = xold + dx;
 	ynew = yold + dy;
 
-	var noClip = false;
+	noClip = false;
 
 	// Ziek if-statement lol
 	if (outOfBounds(xnew, ynew, map)
